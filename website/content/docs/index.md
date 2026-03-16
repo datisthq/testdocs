@@ -1,11 +1,11 @@
 ---
-title: Testblock
+title: Testdocs
 template: splash
 editUrl: false
 lastUpdated: false
 hero:
   tagline: |
-    Testblock description.
+    Testdocs description.
   # image:
   #   file: ../../assets/hero.png
   #   alt: Hero
@@ -15,13 +15,13 @@ hero:
       icon: right-arrow
       variant: primary
     - text: View on GitHub
-      link: https://github.com/datisthq/testblock
+      link: https://github.com/datisthq/testdocs
       icon: external
       variant: minimal
 banner:
   content: |
     <p>
-      This project is in <strong>research preview</strong> phase. Please share your <a href="https://github.com/datisthq/testblock/issues/new"><strong>feedback and ideas</strong></a>
+      This project is in <strong>research preview</strong> phase. Please share your <a href="https://github.com/datisthq/testdocs/issues/new"><strong>feedback and ideas</strong></a>
     </p>
 ---
 

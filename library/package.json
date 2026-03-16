@@ -1,5 +1,5 @@
 {
-  "name": "testblock",
+  "name": "testdocs",
   "type": "module",
   "version": "0.0.0-dev",
   "exports": "./build/index.js",
@@ -9,10 +9,10 @@
   ],
   "license": "MIT",
   "author": "Evgeny Karev",
-  "repository": "https://github.com/datisthq/testblock",
-  "description": "Testblock description",
+  "repository": "https://github.com/datisthq/testdocs",
+  "description": "Testdocs description",
   "keywords": [
-    "testblock"
+    "testdocs"
   ],
   "scripts": {
     "build": "tsgo",

@@ -1,1 +1,1 @@
-export const testblock = "testblock"
+export const testdocs = "testdocs"
