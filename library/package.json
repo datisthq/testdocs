@@ -1,0 +1,21 @@
+{
+  "name": "testblock",
+  "type": "module",
+  "version": "0.0.0-dev",
+  "exports": "./build/index.js",
+  "sideEffects": false,
+  "files": [
+    "build"
+  ],
+  "license": "MIT",
+  "author": "Evgeny Karev",
+  "repository": "https://github.com/datisthq/testblock",
+  "description": "Testblock description",
+  "keywords": [
+    "testblock"
+  ],
+  "scripts": {
+    "build": "tsgo",
+    "type": "tsgo --noEmit"
+  }
+}
