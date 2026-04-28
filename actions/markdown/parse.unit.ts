@@ -12,7 +12,8 @@ describe("parseMarkdown", () => {
   })
 
   it("extracts a marked ts block under a heading", () => {
-    const md = "## Adds two numbers\n\n```ts test\nexpect(1 + 1).toBe(2)\n```\n"
+    const md =
+      "## Adds two numbers\n\n```ts testdocs\nexpect(1 + 1).toBe(2)\n```\n"
     expect(parseMarkdown(md)).toEqual([
       { heading: "Adds two numbers", code: "expect(1 + 1).toBe(2)" },
     ])
@@ -20,7 +21,7 @@ describe("parseMarkdown", () => {
 
   it("returns each duplicate-heading block separately", () => {
     const md =
-      "## Adds\n\n```ts test\na\n```\n\n## Adds\n\n```ts test\nb\n```\n"
+      "## Adds\n\n```ts testdocs\na\n```\n\n## Adds\n\n```ts testdocs\nb\n```\n"
     expect(parseMarkdown(md)).toEqual([
       { heading: "Adds", code: "a" },
       { heading: "Adds", code: "b" },
@@ -29,7 +30,7 @@ describe("parseMarkdown", () => {
 
   it("ignores `# heading` lines inside a fenced code block", () => {
     const md =
-      "## Real\n\n```ts test\n# not a heading\nexpect(1).toBe(1)\n```\n"
+      "## Real\n\n```ts testdocs\n# not a heading\nexpect(1).toBe(1)\n```\n"
     const blocks = parseMarkdown(md)
     expect(blocks).toHaveLength(1)
     expect(blocks[0]?.heading).toBe("Real")
@@ -41,7 +42,7 @@ describe("parseMarkdown", () => {
       "```ts",
       "illustrative",
       "```",
-      "```ts test",
+      "```ts testdocs",
       "runnable",
       "```",
     ].join("\n")
@@ -49,21 +50,26 @@ describe("parseMarkdown", () => {
   })
 
   it("returns empty heading when no heading precedes the block", () => {
-    const md = "```ts test\nexpect(1).toBe(1)\n```\n"
+    const md = "```ts testdocs\nexpect(1).toBe(1)\n```\n"
     expect(parseMarkdown(md)).toEqual([
       { heading: "", code: "expect(1).toBe(1)" },
     ])
   })
 
-  it("accepts tsx with test token", () => {
-    const md = "```tsx test\nconst x = <div />\n```"
+  it("accepts tsx with testdocs token", () => {
+    const md = "```tsx testdocs\nconst x = <div />\n```"
     expect(parseMarkdown(md)).toEqual([
       { heading: "", code: "const x = <div />" },
     ])
   })
 
-  it("does not accept js with test token", () => {
-    const md = "```js test\nconst x = 1\n```"
+  it("does not accept js with testdocs token", () => {
+    const md = "```js testdocs\nconst x = 1\n```"
+    expect(parseMarkdown(md)).toEqual([])
+  })
+
+  it("does not accept the legacy `test` token", () => {
+    const md = "```ts test\nexpect(1).toBe(1)\n```"
     expect(parseMarkdown(md)).toEqual([])
   })
 })

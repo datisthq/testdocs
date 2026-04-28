@@ -1,8 +1,8 @@
 # Writing tests
 
-Mark a code block in any `.md` file as a runnable vitest test by adding `test` to its fence info string.
+Mark a code block in any `.md` file as a runnable test by adding `testdocs` to its fence info string.
 
-```ts test
+```ts testdocs
 expect(1 + 1).toBe(2)
 ```
 

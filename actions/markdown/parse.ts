@@ -5,7 +5,8 @@ import type { Block } from "../../models/block.ts"
 
 /**
  * Extract runnable code blocks from markdown. A block is runnable when its
- * fence info string starts with `ts` or `tsx` and includes the token `test`.
+ * fence info string starts with `ts` or `tsx` and includes the token
+ * `testdocs`.
  */
 export function parseMarkdown(source: string): Block[] {
   const tree = unified().use(remarkParse).parse(source)
@@ -18,7 +19,7 @@ export function parseMarkdown(source: string): Block[] {
     } else if (node.type === "code") {
       const lang = node.lang ?? ""
       const tokens = (node.meta ?? "").split(/\s+/).filter(Boolean)
-      if ((lang === "ts" || lang === "tsx") && tokens.includes("test")) {
+      if ((lang === "ts" || lang === "tsx") && tokens.includes("testdocs")) {
         blocks.push({ heading: currentHeading, code: node.value })
       }
     }
