@@ -24,9 +24,11 @@ parametric options, bare tokens for booleans.
 Useful when the heading is too generic or you want stable names regardless of
 heading edits.
 
+````md
 ```ts test name="adds two positive numbers"
 expect(1 + 1).toBe(2)
 ```
+````
 
 User-supplied names are passed through verbatim — no `#1`/`#2` suffixing even
 on collisions.
@@ -36,18 +38,22 @@ on collisions.
 Marks the block so vitest/jest reports it but doesn't execute it. Useful for
 documenting behavior that's pending or temporarily broken.
 
+````md
 ```ts test skip
 // not executed
 ```
+````
 
 ## Focusing on one test
 
 Mirrors vitest/jest `it.only(...)` — only this block runs in its file; all
 others are skipped.
 
+````md
 ```ts test only
 expect(true).toBe(true)
 ```
+````
 
 ## Combining options
 
@@ -55,8 +61,8 @@ Options can be combined freely. When both `skip` and `only` are set on the
 same block, `skip` wins (safer default for CI: no-op the marker rather than
 silently focus).
 
-```md title="example"
-\`\`\`ts test only name="focus me"
+````md
+```ts test only name="focus me"
 expect(true).toBe(true)
-\`\`\`
 ```
+````

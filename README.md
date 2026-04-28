@@ -18,10 +18,12 @@ Add `test` to any TypeScript fence in any `.md` file. The block's body becomes
 the body of an `it()` named after the nearest preceding heading. `describe`,
 `it`, and `expect` are injected for you.
 
+````md
 ```ts test
 import { sum } from "./sum.ts"
 expect(sum(1, 2)).toBe(3)
 ```
+````
 
 Untagged `ts` blocks render normally and are not run, so you can mix
 illustrative snippets and runnable assertions in the same article.

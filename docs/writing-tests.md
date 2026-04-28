@@ -11,13 +11,14 @@ description: Mark code blocks as runnable tests and how testdocs picks them up.
 Mark a code block in any `.md` file as a runnable test by adding `test` to its
 fence info string:
 
+````md
 ```ts test
 expect(1 + 1).toBe(2)
 ```
+````
 
-The fence above is a real test. Untagged `ts` blocks render normally and are
-not run, so you can freely mix illustrative snippets and runnable assertions
-in the same article.
+Untagged `ts` blocks render normally and are not run, so you can freely mix
+illustrative snippets and runnable assertions in the same article.
 
 ## Test names
 
@@ -31,10 +32,12 @@ see [Per-block options](/options/).
 `describe`, `it`, and `expect` are injected at the top of the generated test
 module — you don't need to import them. Doctest bodies stay clean:
 
+````md
 ```ts test
 const items = [1, 2, 3]
 expect(items.length).toBe(3)
 ```
+````
 
 ## Imports
 
@@ -42,13 +45,13 @@ Any `import` statements inside a runnable block are hoisted to the module top
 and shared across every test in the same `.md` file. Multi-line imports work
 because the parser uses a real TypeScript AST (ts-morph), not a regex.
 
-```md title="example"
-\`\`\`ts test
+````md
+```ts test
 import { sum } from "./sum.ts"
 
 expect(sum(1, 2)).toBe(3)
-\`\`\`
 ```
+````
 
 ## Supported languages
 
