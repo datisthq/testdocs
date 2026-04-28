@@ -66,4 +66,40 @@ describe("parseMarkdown", () => {
     const md = "```js test\nconst x = 1\n```"
     expect(parseMarkdown(md)).toEqual([])
   })
+
+  it('captures `name="..."` as the block\'s name override', () => {
+    const md = '## H\n\n```ts test name="custom"\nx\n```\n'
+    expect(parseMarkdown(md)).toEqual([
+      { heading: "H", code: "x", name: "custom" },
+    ])
+  })
+
+  it("captures the `skip` token", () => {
+    const md = "## H\n\n```ts test skip\nx\n```\n"
+    expect(parseMarkdown(md)).toEqual([{ heading: "H", code: "x", skip: true }])
+  })
+
+  it("captures the `only` token", () => {
+    const md = "## H\n\n```ts test only\nx\n```\n"
+    expect(parseMarkdown(md)).toEqual([{ heading: "H", code: "x", only: true }])
+  })
+
+  it("captures combined options", () => {
+    const md = '## H\n\n```ts test only name="focus me"\nx\n```\n'
+    expect(parseMarkdown(md)).toEqual([
+      { heading: "H", code: "x", name: "focus me", only: true },
+    ])
+  })
+
+  it("does not pick up tokens that appear inside a name value", () => {
+    const md = '## H\n\n```ts test name="includes skip word"\nx\n```\n'
+    expect(parseMarkdown(md)).toEqual([
+      { heading: "H", code: "x", name: "includes skip word" },
+    ])
+  })
+
+  it("does not match `name=` inside another word", () => {
+    const md = '## H\n\n```ts test myname="x"\ny\n```\n'
+    expect(parseMarkdown(md)).toEqual([{ heading: "H", code: "y" }])
+  })
 })

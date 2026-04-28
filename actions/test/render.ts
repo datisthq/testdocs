@@ -4,6 +4,8 @@ import type { Partition } from "../../models/partition.ts"
 import type { Plugin } from "../../models/plugin.ts"
 import { createProject } from "../project/create.ts"
 
+type ItKind = "it" | "it.skip" | "it.only"
+
 /**
  * Assemble the final test module from parsed blocks and their partitioned
  * code, using the plugin's `initialImport` (if any) as the seed for the
@@ -30,7 +32,9 @@ export function renderTestModule(
   const fallback = filename.replace(/\.md$/, "")
   const names = assignNames(blocks, fallback)
   const itStatements = blocks
-    .map((block, index) => renderIt(names[index] ?? fallback, block.body))
+    .map((block, index) =>
+      renderIt(names[index] ?? fallback, block.body, kindFor(block)),
+    )
     .join("\n")
   file.addStatements(
     `describe(${JSON.stringify(filename)}, () => {\n${itStatements}\n})`,
@@ -40,29 +44,36 @@ export function renderTestModule(
   return file.getFullText()
 }
 
-function assignNames(
-  blocks: { heading: string }[],
-  fallback: string,
-): string[] {
-  const raw = blocks.map(block => block.heading || fallback)
-  const totals = new Map<string, number>()
-  for (const name of raw) {
-    totals.set(name, (totals.get(name) ?? 0) + 1)
+function assignNames(blocks: Block[], fallback: string): string[] {
+  const autoTotals = new Map<string, number>()
+  for (const block of blocks) {
+    if (block.name === undefined) {
+      const auto = block.heading || fallback
+      autoTotals.set(auto, (autoTotals.get(auto) ?? 0) + 1)
+    }
   }
+
   const seen = new Map<string, number>()
-  return raw.map(name => {
-    const total = totals.get(name) ?? 0
-    if (total <= 1) return name
-    const occurrence = (seen.get(name) ?? 0) + 1
-    seen.set(name, occurrence)
-    return `${name} #${occurrence}`
+  return blocks.map(block => {
+    if (block.name !== undefined) return block.name
+    const auto = block.heading || fallback
+    if ((autoTotals.get(auto) ?? 0) <= 1) return auto
+    const occurrence = (seen.get(auto) ?? 0) + 1
+    seen.set(auto, occurrence)
+    return `${auto} #${occurrence}`
   })
 }
 
-function renderIt(name: string, body: string): string {
+function kindFor(block: Block): ItKind {
+  if (block.skip) return "it.skip"
+  if (block.only) return "it.only"
+  return "it"
+}
+
+function renderIt(name: string, body: string, kind: ItKind): string {
   const safeName = JSON.stringify(name)
   if (body.length === 0) {
-    return `it(${safeName}, async () => {})`
+    return `${kind}(${safeName}, async () => {})`
   }
-  return `it(${safeName}, async () => {\n${body}\n})`
+  return `${kind}(${safeName}, async () => {\n${body}\n})`
 }

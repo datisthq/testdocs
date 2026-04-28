@@ -12,6 +12,28 @@ The fence above is now a test. Untagged `ts` blocks render normally and are not 
 
 The test name comes from the nearest preceding heading. Two blocks under the same heading are suffixed `#1`, `#2`, etc. A block with no preceding heading uses the file basename.
 
+## Per-block options
+
+The fence info string accepts these tokens after `test`:
+
+- `name="..."` — explicit test name; overrides heading-based naming and is never auto-suffixed.
+- `skip` — emit as `it.skip(...)` so the test is reported but not run.
+- `only` — emit as `it.only(...)` to focus only on this test in the file. (When both are set, `skip` wins.)
+
+Examples:
+
+```ts test name="adds two numbers"
+expect(1 + 1).toBe(2)
+```
+
+```ts test skip
+// not executed
+```
+
+```ts test only
+expect(true).toBe(true)
+```
+
 ## Imports
 
 `describe`, `it`, and `expect` are injected automatically — you don't need to import them. Any other `import` statements inside a runnable block are hoisted to the module top and shared across every test in the same `.md` file. Multi-line imports work.

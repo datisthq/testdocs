@@ -136,4 +136,103 @@ describe("renderTestModule", () => {
     expect(out).toContain(`import { sum } from "lib"`)
     expect(out).not.toContain(`from "vitest"`)
   })
+
+  it("uses block.name verbatim instead of heading when set", () => {
+    const out = renderTestModule(
+      [
+        {
+          heading: "ignored",
+          code: "",
+          name: "explicit name",
+          imports: [],
+          body: "expect(1).toBe(1)",
+        },
+      ],
+      "foo.md",
+      { plugin: vitestPlugin },
+    )
+    expect(out).toContain(`it("explicit name"`)
+    expect(out).not.toContain(`it("ignored"`)
+  })
+
+  it("does not suffix user-supplied duplicate names", () => {
+    const out = renderTestModule(
+      [
+        {
+          heading: "h",
+          code: "",
+          name: "same",
+          imports: [],
+          body: "a",
+        },
+        {
+          heading: "h",
+          code: "",
+          name: "same",
+          imports: [],
+          body: "b",
+        },
+      ],
+      "foo.md",
+      { plugin: vitestPlugin },
+    )
+    const matches = out.match(/it\("same"/g) ?? []
+    expect(matches).toHaveLength(2)
+    expect(out).not.toContain("#1")
+  })
+
+  it("emits it.skip when block.skip is true", () => {
+    const out = renderTestModule(
+      [
+        {
+          heading: "X",
+          code: "",
+          skip: true,
+          imports: [],
+          body: "expect(1).toBe(1)",
+        },
+      ],
+      "foo.md",
+      { plugin: vitestPlugin },
+    )
+    expect(out).toContain(`it.skip("X"`)
+    expect(out).not.toMatch(/\bit\("X"/)
+  })
+
+  it("emits it.only when block.only is true", () => {
+    const out = renderTestModule(
+      [
+        {
+          heading: "X",
+          code: "",
+          only: true,
+          imports: [],
+          body: "expect(1).toBe(1)",
+        },
+      ],
+      "foo.md",
+      { plugin: vitestPlugin },
+    )
+    expect(out).toContain(`it.only("X"`)
+    expect(out).not.toMatch(/\bit\("X"/)
+  })
+
+  it("prefers it.skip over it.only when both are set", () => {
+    const out = renderTestModule(
+      [
+        {
+          heading: "X",
+          code: "",
+          skip: true,
+          only: true,
+          imports: [],
+          body: "expect(1).toBe(1)",
+        },
+      ],
+      "foo.md",
+      { plugin: vitestPlugin },
+    )
+    expect(out).toContain(`it.skip("X"`)
+    expect(out).not.toContain(`it.only("X"`)
+  })
 })
