@@ -18,7 +18,7 @@ The test name comes from the nearest preceding heading. Two blocks under the sam
 
 ## Setup
 
-Add the plugin to your vite config and include `.md` files in vitest's discovery:
+Add the plugin to your vite config and include `.md` files in vitest's discovery. The same plugin works for both `vitest` and `vite-plus` projects — the generated test modules import from whichever runner is installed.
 
 ```ts
 import testdocs from "testdocs/vite"

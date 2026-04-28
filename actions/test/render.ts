@@ -18,7 +18,7 @@ export function renderTestModule(
   const file = project.createSourceFile("__out.ts", "", { overwrite: true })
 
   const seen = new Set<string>([
-    `import { describe, expect, it } from "vitest"`,
+    `const { describe, expect, it } = await import("vite-plus/test").catch(() => import("vitest"))`,
   ])
   for (const block of blocks) {
     for (const imp of block.imports) seen.add(imp)

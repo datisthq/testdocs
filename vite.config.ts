@@ -1,9 +1,11 @@
 import { basename, dirname, join } from "node:path"
 import { coverageConfigDefaults, defineConfig } from "vite-plus"
+import testdocs from "./plugins/vitest/index.ts"
 
 const ignorePatterns = ["**/generated/**"]
 
 export default defineConfig({
+  plugins: [testdocs()],
   fmt: {
     semi: false,
     printWidth: 80,
@@ -18,7 +20,7 @@ export default defineConfig({
     },
   },
   test: {
-    include: ["**/*.unit.(ts|tsx)"],
+    include: ["**/*.unit.(ts|tsx)", "docs/**/*.md"],
     exclude: ["**/node_modules/**", "**/build/**"],
     env: { NODE_OPTIONS: "--no-warnings" },
     testTimeout: 60 * 1000,
