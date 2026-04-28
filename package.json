@@ -33,13 +33,17 @@
     "unit": "vp test"
   },
   "dependencies": {
-    "ts-morph": "^27.0.2"
+    "mdast-util-to-string": "^4.0.0",
+    "remark-parse": "^11.0.0",
+    "ts-morph": "^27.0.2",
+    "unified": "^11.0.5"
   },
   "devDependencies": {
     "@plausible-analytics/tracker": "^0.4.4",
     "@semantic-release/exec": "7.1.0",
     "@tanstack/react-router": "1.168.1",
     "@tanstack/react-start": "1.167.2",
+    "@types/mdast": "^4.0.4",
     "@types/node": "24.2.0",
     "@typescript/native-preview": "7.0.0-dev.20260316.1",
     "@vitest/coverage-v8": "4.1.5",

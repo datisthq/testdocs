@@ -1,7 +1,6 @@
 import type { Project } from "ts-morph"
+import type { Partition } from "../../models/partition.ts"
 import { createProject } from "../project/create.ts"
-
-export type Partition = { imports: string[]; body: string }
 
 /**
  * Split a TypeScript snippet into its top-level import declarations

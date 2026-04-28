@@ -1,5 +1,5 @@
-import type { Partition } from "../code/partition.ts"
-import type { Block } from "../markdown/parse.ts"
+import type { Block } from "../../models/block.ts"
+import type { Partition } from "../../models/partition.ts"
 
 /**
  * Assemble the final vitest test module from parsed blocks and their
