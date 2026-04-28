@@ -78,7 +78,7 @@ describe("renderTestModule", () => {
       ],
       "foo.md",
     )
-    expect(out).toContain(`it("X", async () => {})`)
+    expect(out).toContain(`it("X", async () => { })`)
     expect(out).toContain(`import "side-effect"`)
   })
 })

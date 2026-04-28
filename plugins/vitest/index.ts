@@ -19,7 +19,7 @@ export default function testdocs(): Plugin {
         ...block,
         ...partitionCode(block.code, project),
       }))
-      return { code: renderTestModule(enriched, filename), map: null }
+      return { code: renderTestModule(enriched, filename, project), map: null }
     },
   }
 }
