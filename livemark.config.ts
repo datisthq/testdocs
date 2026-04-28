@@ -3,9 +3,10 @@ import { defineConfig } from "livemark"
 export default defineConfig({
   site: "https://testdocs.dev",
   title: "Testdocs",
-  description: "Testdocs description",
+  description: "Test codeblocks in Vitest/Jest",
   logo: "/logo.svg",
-  include: ["docs/**/*.md", "README.md"],
+  favicon: "/logo.png",
+  include: ["docs/**/*.md", "README.md", "CONTRIBUTING.md"],
   sections: [
     { title: "Docs", prefix: "/" },
     {
@@ -32,6 +33,17 @@ export default defineConfig({
         icon: "rocket",
         order: 1,
         path: "/introduction/",
+      },
+    },
+    {
+      file: "CONTRIBUTING.md",
+      article: {
+        title: "Contributing",
+        description:
+          "How to set up testdocs locally, propose changes, and ship a release.",
+        icon: "heart-handshake",
+        order: -1,
+        path: "/contributing/",
       },
     },
   ],
