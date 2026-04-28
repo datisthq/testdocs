@@ -143,7 +143,7 @@ const features: Feature[] = [
     icon: SlidersHorizontal,
     title: "Per-block options",
     description:
-      "Use name=\"...\", skip, or only inside the fence to override naming and focus or skip individual doctests.",
+      'Use name="...", skip, or only inside the fence to override naming and focus or skip individual doctests.',
   },
   {
     icon: ShieldCheck,
