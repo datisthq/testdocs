@@ -21,7 +21,7 @@ describe("renderTestModule", () => {
     expect(out).toContain(`describe("foo.md", () =>`)
     expect(out).toContain(`it("Adds", async () =>`)
     expect(out).toContain("expect(1).toBe(1)")
-    expect(out).toContain(`import { describe, it } from "vitest"`)
+    expect(out).toContain(`import { describe, expect, it } from "vitest"`)
   })
 
   it("suffixes duplicate headings with #N", () => {

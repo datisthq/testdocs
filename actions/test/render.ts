@@ -17,7 +17,9 @@ export function renderTestModule(
   project ??= createProject()
   const file = project.createSourceFile("__out.ts", "", { overwrite: true })
 
-  const seen = new Set<string>([`import { describe, it } from "vitest"`])
+  const seen = new Set<string>([
+    `import { describe, expect, it } from "vitest"`,
+  ])
   for (const block of blocks) {
     for (const imp of block.imports) seen.add(imp)
   }
