@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect x="157" y="25"  width="18" height="18" rx="4" fill="#4ade80"/>
   <rect x="179" y="25"  width="18" height="18" rx="4" fill="#4ade80"/>
+  <rect x="135" y="47"  width="18" height="18" rx="4" fill="#4ade80"/>
   <rect x="157" y="47"  width="18" height="18" rx="4" fill="#4ade80"/>
+  <rect x="113" y="69"  width="18" height="18" rx="4" fill="#22c55e"/>
   <rect x="135" y="69"  width="18" height="18" rx="4" fill="#22c55e"/>
+  <rect x="91"  y="91"  width="18" height="18" rx="4" fill="#22c55e"/>
   <rect x="113" y="91"  width="18" height="18" rx="4" fill="#22c55e"/>
   <rect x="3"   y="113" width="18" height="18" rx="4" fill="#15803d"/>
+  <rect x="25"  y="113" width="18" height="18" rx="4" fill="#15803d"/>
+  <rect x="69"  y="113" width="18" height="18" rx="4" fill="#15803d"/>
   <rect x="91"  y="113" width="18" height="18" rx="4" fill="#15803d"/>
   <rect x="25"  y="135" width="18" height="18" rx="4" fill="#15803d"/>
+  <rect x="47"  y="135" width="18" height="18" rx="4" fill="#15803d"/>
   <rect x="69"  y="135" width="18" height="18" rx="4" fill="#15803d"/>
   <rect x="47"  y="157" width="18" height="18" rx="4" fill="#15803d"/>
+  <rect x="69"  y="157" width="18" height="18" rx="4" fill="#15803d"/>
 </svg>
