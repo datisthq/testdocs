@@ -1,68 +1,56 @@
+---
+title: Writing tests
+path: /writing-tests/
+icon: file-pen-line
+order: 2
+description: Mark code blocks as runnable tests and how testdocs picks them up.
+---
+
 # Writing tests
 
-Mark a code block in any `.md` file as a runnable test by adding `test` to its fence info string.
+Mark a code block in any `.md` file as a runnable test by adding `test` to its
+fence info string:
 
 ```ts test
 expect(1 + 1).toBe(2)
 ```
 
-The fence above is now a test. Untagged `ts` blocks render normally and are not run.
+The fence above is a real test. Untagged `ts` blocks render normally and are
+not run, so you can freely mix illustrative snippets and runnable assertions
+in the same article.
 
 ## Test names
 
-The test name comes from the nearest preceding heading. Two blocks under the same heading are suffixed `#1`, `#2`, etc. A block with no preceding heading uses the file basename.
+The test name comes from the **nearest preceding heading**. Two blocks under
+the same heading are auto-suffixed `#1`, `#2`, and so on. A block with no
+preceding heading uses the file's basename. To override naming explicitly,
+see [Per-block options](/options/).
 
-## Per-block options
+## Auto-injected helpers
 
-The fence info string accepts these tokens after `test`:
+`describe`, `it`, and `expect` are injected at the top of the generated test
+module — you don't need to import them. Doctest bodies stay clean:
 
-- `name="..."` — explicit test name; overrides heading-based naming and is never auto-suffixed.
-- `skip` — emit as `it.skip(...)` so the test is reported but not run.
-- `only` — emit as `it.only(...)` to focus only on this test in the file. (When both are set, `skip` wins.)
-
-Examples:
-
-```ts test name="adds two numbers"
-expect(1 + 1).toBe(2)
-```
-
-```ts test skip
-// not executed
-```
-
-```ts test only
-expect(true).toBe(true)
+```ts test
+const items = [1, 2, 3]
+expect(items.length).toBe(3)
 ```
 
 ## Imports
 
-`describe`, `it`, and `expect` are injected automatically — you don't need to import them. Any other `import` statements inside a runnable block are hoisted to the module top and shared across every test in the same `.md` file. Multi-line imports work.
+Any `import` statements inside a runnable block are hoisted to the module top
+and shared across every test in the same `.md` file. Multi-line imports work
+because the parser uses a real TypeScript AST (ts-morph), not a regex.
 
-## Setup (vitest / vite-plus)
+```md title="example"
+\`\`\`ts test
+import { sum } from "./sum.ts"
 
-Add the plugin to your vite config and include `.md` files in vitest's discovery. The same plugin works for both `vitest` and `vite-plus` projects — the generated test modules import from whichever runner is installed.
-
-```ts
-import testdocs from "testdocs/vite"
-import { defineConfig } from "vitest/config"
-
-export default defineConfig({
-  plugins: [testdocs()],
-  test: {
-    include: ["**/*.test.ts", "docs/**/*.md"],
-  },
-})
+expect(sum(1, 2)).toBe(3)
+\`\`\`
 ```
 
-## Setup (jest)
+## Supported languages
 
-Use the jest transformer entry instead. Generated tests rely on jest's globals (`describe`/`it`/`expect`), so no extra import is injected.
-
-```ts
-export default {
-  transform: { "\\.md$": "testdocs/jest" },
-  testMatch: ["**/*.test.ts", "**/docs/**/*.md"],
-}
-```
-
-testdocs is published as ESM, so default-CJS jest setups may need `--experimental-vm-modules` or equivalent ESM config.
+Only `ts` and `tsx` fences are picked up. `js`/`jsx` blocks render but are
+not run — keep tests typed.
