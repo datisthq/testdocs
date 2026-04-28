@@ -16,7 +16,7 @@ The test name comes from the nearest preceding heading. Two blocks under the sam
 
 `describe`, `it`, and `expect` are injected automatically — you don't need to import them. Any other `import` statements inside a runnable block are hoisted to the module top and shared across every test in the same `.md` file. Multi-line imports work.
 
-## Setup
+## Setup (vitest / vite-plus)
 
 Add the plugin to your vite config and include `.md` files in vitest's discovery. The same plugin works for both `vitest` and `vite-plus` projects — the generated test modules import from whichever runner is installed.
 
@@ -31,3 +31,16 @@ export default defineConfig({
   },
 })
 ```
+
+## Setup (jest)
+
+Use the jest transformer entry instead. Generated tests rely on jest's globals (`describe`/`it`/`expect`), so no extra import is injected.
+
+```ts
+export default {
+  transform: { "\\.md$": "testdocs/jest" },
+  testMatch: ["**/*.test.ts", "**/docs/**/*.md"],
+}
+```
+
+testdocs is published as ESM, so default-CJS jest setups may need `--experimental-vm-modules` or equivalent ESM config.

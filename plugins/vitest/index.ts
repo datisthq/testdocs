@@ -1,13 +1,18 @@
-import type { Plugin } from "vite"
+import type { Plugin as VitePlugin } from "vite"
 import { partitionCode } from "../../actions/code/partition.ts"
 import { parseMarkdown } from "../../actions/markdown/parse.ts"
 import { createProject } from "../../actions/project/create.ts"
 import { renderTestModule } from "../../actions/test/render.ts"
+import type { Plugin } from "../../models/plugin.ts"
+
+const plugin: Plugin = {
+  initialImport: `const { describe, expect, it } = await import("vite-plus/test").catch(() => import("vitest"))`,
+}
 
 /**
  * Vite plugin that turns runnable code blocks in `.md` files into vitest tests.
  */
-export default function testdocs(): Plugin {
+export default function testdocs(): VitePlugin {
   const project = createProject()
   return {
     name: "testdocs",
@@ -19,7 +24,10 @@ export default function testdocs(): Plugin {
         ...block,
         ...partitionCode(block.code, project),
       }))
-      return { code: renderTestModule(enriched, filename, project), map: null }
+      return {
+        code: renderTestModule(enriched, filename, { plugin, project }),
+        map: null,
+      }
     },
   }
 }

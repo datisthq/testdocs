@@ -1,9 +1,20 @@
 import { describe, expect, it } from "vite-plus/test"
+import type { Plugin } from "../../models/plugin.ts"
 import { renderTestModule } from "./render.ts"
+
+const vitestPlugin: Plugin = {
+  initialImport: `const { describe, expect, it } = await import("vite-plus/test").catch(() => import("vitest"))`,
+}
+
+const jestPlugin: Plugin = {
+  initialImport: null,
+}
 
 describe("renderTestModule", () => {
   it("returns export {} for empty input", () => {
-    expect(renderTestModule([], "foo.md")).toBe("export {}\n")
+    expect(renderTestModule([], "foo.md", { plugin: vitestPlugin })).toBe(
+      "export {}\n",
+    )
   })
 
   it("wraps a single block in describe + async it", () => {
@@ -17,6 +28,7 @@ describe("renderTestModule", () => {
         },
       ],
       "foo.md",
+      { plugin: vitestPlugin },
     )
     expect(out).toContain(`describe("foo.md", () =>`)
     expect(out).toContain(`it("Adds", async () =>`)
@@ -33,6 +45,7 @@ describe("renderTestModule", () => {
         { heading: "Adds", code: "", imports: [], body: "b" },
       ],
       "foo.md",
+      { plugin: vitestPlugin },
     )
     expect(out).toContain(`it("Adds #1"`)
     expect(out).toContain(`it("Adds #2"`)
@@ -55,6 +68,7 @@ describe("renderTestModule", () => {
         },
       ],
       "foo.md",
+      { plugin: vitestPlugin },
     )
     const matches = out.match(/import \{ sum \} from "lib"/g) ?? []
     expect(matches).toHaveLength(1)
@@ -64,6 +78,7 @@ describe("renderTestModule", () => {
     const out = renderTestModule(
       [{ heading: "", code: "", imports: [], body: "ok()" }],
       "configuration.md",
+      { plugin: vitestPlugin },
     )
     expect(out).toContain(`it("configuration"`)
   })
@@ -79,8 +94,46 @@ describe("renderTestModule", () => {
         },
       ],
       "foo.md",
+      { plugin: vitestPlugin },
     )
     expect(out).toContain(`it("X", async () => { })`)
     expect(out).toContain(`import "side-effect"`)
+  })
+
+  it("emits no auto-injected import when plugin.initialImport is null", () => {
+    const out = renderTestModule(
+      [
+        {
+          heading: "Sum",
+          code: "",
+          imports: [],
+          body: "expect(1).toBe(1)",
+        },
+      ],
+      "foo.md",
+      { plugin: jestPlugin },
+    )
+    expect(out).toContain(`describe("foo.md"`)
+    expect(out).toContain(`it("Sum"`)
+    expect(out).toContain("expect(1).toBe(1)")
+    expect(out).not.toContain(`from "vitest"`)
+    expect(out).not.toContain(`await import("vite-plus/test")`)
+  })
+
+  it("still hoists user imports when plugin.initialImport is null", () => {
+    const out = renderTestModule(
+      [
+        {
+          heading: "Add",
+          code: "",
+          imports: [`import { sum } from "lib"`],
+          body: "expect(sum(1, 2)).toBe(3)",
+        },
+      ],
+      "foo.md",
+      { plugin: jestPlugin },
+    )
+    expect(out).toContain(`import { sum } from "lib"`)
+    expect(out).not.toContain(`from "vitest"`)
   })
 })

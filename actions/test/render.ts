@@ -1,25 +1,27 @@
 import type { Project } from "ts-morph"
 import type { Block } from "../../models/block.ts"
 import type { Partition } from "../../models/partition.ts"
+import type { Plugin } from "../../models/plugin.ts"
 import { createProject } from "../project/create.ts"
 
 /**
- * Assemble the final vitest test module from parsed blocks and their
- * partitioned code. Imports are deduped and hoisted to module scope.
+ * Assemble the final test module from parsed blocks and their partitioned
+ * code, using the plugin's `initialImport` (if any) as the seed for the
+ * hoisted import set. Imports are deduped across all blocks.
  */
 export function renderTestModule(
   blocks: (Block & Partition)[],
   filename: string,
-  project?: Project,
+  options: { plugin: Plugin; project?: Project },
 ): string {
   if (blocks.length === 0) return "export {}\n"
 
-  project ??= createProject()
+  const project = options.project ?? createProject()
   const file = project.createSourceFile("__out.ts", "", { overwrite: true })
 
-  const seen = new Set<string>([
-    `const { describe, expect, it } = await import("vite-plus/test").catch(() => import("vitest"))`,
-  ])
+  const seen = new Set<string>(
+    options.plugin.initialImport ? [options.plugin.initialImport] : [],
+  )
   for (const block of blocks) {
     for (const imp of block.imports) seen.add(imp)
   }
