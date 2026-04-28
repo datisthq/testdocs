@@ -36,7 +36,7 @@ function Hero() {
       <BackgroundGrid />
       <div className="relative w-full mx-auto max-w-5xl px-6 py-16 text-center animate-in fade-in-0 slide-in-from-bottom-4 duration-700 ease-out">
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-foreground">
-          Documentation that runs in your{" "}
+          Docs that run in your{" "}
           <span className="relative inline-block">
             <span className="relative z-10">test suite</span>
             <span
