@@ -1,6 +1,6 @@
 import { basename, dirname, join } from "node:path"
 import { coverageConfigDefaults, defineConfig } from "vite-plus"
-import testdocs from "./plugins/vitest/index.ts"
+import testdocs from "./plugins/vite/index.ts"
 
 const ignorePatterns = ["**/generated/**"]
 

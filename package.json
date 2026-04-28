@@ -14,8 +14,8 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./vite": "./build/plugins/vitest/index.js",
-    "./jest": "./build/plugins/jest/index.js"
+    "./jest": "./build/plugins/jest/index.js",
+    "./vite": "./build/plugins/vite/index.js"
   },
   "scripts": {
     "build": "tsgo",
