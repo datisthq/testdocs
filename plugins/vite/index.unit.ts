@@ -9,7 +9,7 @@ describe("testdocs vite plugin", () => {
   })
 
   it("transforms a marked code block end-to-end", () => {
-    const md = "# Sum\n\n```ts testdocs\nexpect(1).toBe(1)\n```\n"
+    const md = "# Sum\n\n```ts test\nexpect(1).toBe(1)\n```\n"
     const code = expectTransformedCode(
       invokeTransform(plugin.transform, md, "/path/foo.md"),
     )

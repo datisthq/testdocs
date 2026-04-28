@@ -1,8 +1,8 @@
 # Writing tests
 
-Mark a code block in any `.md` file as a runnable test by adding `testdocs` to its fence info string.
+Mark a code block in any `.md` file as a runnable test by adding `test` to its fence info string.
 
-```ts testdocs
+```ts test
 expect(1 + 1).toBe(2)
 ```
 
