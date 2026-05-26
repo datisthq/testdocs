@@ -47,9 +47,8 @@ function Hero() {
         </h1>
 
         <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-          Mark a TypeScript code block in any <code>.md</code> file. Testdocs
-          lifts it into a real vitest or jest test — no separate spec file, no
-          boilerplate.
+          Mark a TypeScript code block in any <code>.md</code> file. Testdocs lifts it
+          into a real vitest or jest test — no separate spec file, no boilerplate.
         </p>
 
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -162,8 +161,7 @@ function Features() {
               Doctests, the way you wished they worked
             </h2>
             <p className="mt-4 text-muted-foreground text-lg">
-              Lean defaults, no setup beyond the plugin, full control when you
-              need it.
+              Lean defaults, no setup beyond the plugin, full control when you need it.
             </p>
           </div>
         </Reveal>
@@ -186,9 +184,7 @@ function FeatureCard({ icon: Icon, title, description }: Feature) {
         <Icon className="size-5" />
       </div>
       <h3 className="text-lg font-semibold text-foreground">{title}</h3>
-      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-        {description}
-      </p>
+      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{description}</p>
     </div>
   )
 }
@@ -247,19 +243,17 @@ function TerminalSample() {
   return (
     <pre className="p-5 text-sm leading-relaxed font-mono overflow-x-auto">
       <code className={tk.body}>
-        <span className={tk.prompt}>$</span>{" "}
-        <span className={tk.func}>pnpm</span> test
+        <span className={tk.prompt}>$</span> <span className={tk.func}>pnpm</span> test
         {"\n\n "}
-        <span className={tk.pass}>✓</span> docs/sum.md{" "}
-        <span className={tk.dim}>(1)</span>
+        <span className={tk.pass}>✓</span> docs/sum.md <span className={tk.dim}>(1)</span>
         {"\n   "}
         <span className={tk.pass}>✓</span> Adds two numbers
         {"\n\n "}
         <span className={tk.dim}>Test Files</span>{" "}
         <span className={tk.pass}>1 passed</span> (1)
         {"\n      "}
-        <span className={tk.dim}>Tests</span>{" "}
-        <span className={tk.pass}>1 passed</span> (1)
+        <span className={tk.dim}>Tests</span> <span className={tk.pass}>1 passed</span>{" "}
+        (1)
       </code>
     </pre>
   )
@@ -275,9 +269,8 @@ function Showcase() {
               Write a doctest. Get a test.
             </h2>
             <p className="mt-4 text-muted-foreground text-lg">
-              Tag a fence with <code className="font-mono">test</code> and the
-              block's body becomes the body of an{" "}
-              <code className="font-mono">it()</code>.
+              Tag a fence with <code className="font-mono">test</code> and the block's
+              body becomes the body of an <code className="font-mono">it()</code>.
             </p>
           </div>
         </Reveal>

@@ -20,11 +20,7 @@ describe("testdocs vite plugin", () => {
 
   it("returns export {} for md files with no marked blocks", () => {
     const code = expectTransformedCode(
-      invokeTransform(
-        plugin.transform,
-        "# H\n\n```ts\nx\n```\n",
-        "/path/empty.md",
-      ),
+      invokeTransform(plugin.transform, "# H\n\n```ts\nx\n```\n", "/path/empty.md"),
     )
     expect(code).toBe("export {}\n")
   })

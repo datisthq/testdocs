@@ -19,8 +19,7 @@ describe("parseMarkdown", () => {
   })
 
   it("returns each duplicate-heading block separately", () => {
-    const md =
-      "## Adds\n\n```ts test\na\n```\n\n## Adds\n\n```ts test\nb\n```\n"
+    const md = "## Adds\n\n```ts test\na\n```\n\n## Adds\n\n```ts test\nb\n```\n"
     expect(parseMarkdown(md)).toEqual([
       { heading: "Adds", code: "a" },
       { heading: "Adds", code: "b" },
@@ -28,8 +27,7 @@ describe("parseMarkdown", () => {
   })
 
   it("ignores `# heading` lines inside a fenced code block", () => {
-    const md =
-      "## Real\n\n```ts test\n# not a heading\nexpect(1).toBe(1)\n```\n"
+    const md = "## Real\n\n```ts test\n# not a heading\nexpect(1).toBe(1)\n```\n"
     const blocks = parseMarkdown(md)
     expect(blocks).toHaveLength(1)
     expect(blocks[0]?.heading).toBe("Real")
@@ -50,16 +48,12 @@ describe("parseMarkdown", () => {
 
   it("returns empty heading when no heading precedes the block", () => {
     const md = "```ts test\nexpect(1).toBe(1)\n```\n"
-    expect(parseMarkdown(md)).toEqual([
-      { heading: "", code: "expect(1).toBe(1)" },
-    ])
+    expect(parseMarkdown(md)).toEqual([{ heading: "", code: "expect(1).toBe(1)" }])
   })
 
   it("accepts tsx with test token", () => {
     const md = "```tsx test\nconst x = <div />\n```"
-    expect(parseMarkdown(md)).toEqual([
-      { heading: "", code: "const x = <div />" },
-    ])
+    expect(parseMarkdown(md)).toEqual([{ heading: "", code: "const x = <div />" }])
   })
 
   it("does not accept js with test token", () => {
@@ -69,9 +63,7 @@ describe("parseMarkdown", () => {
 
   it('captures `name="..."` as the block\'s name override', () => {
     const md = '## H\n\n```ts test name="custom"\nx\n```\n'
-    expect(parseMarkdown(md)).toEqual([
-      { heading: "H", code: "x", name: "custom" },
-    ])
+    expect(parseMarkdown(md)).toEqual([{ heading: "H", code: "x", name: "custom" }])
   })
 
   it("captures the `skip` token", () => {

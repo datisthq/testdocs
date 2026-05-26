@@ -12,9 +12,7 @@ const jestPlugin: Plugin = {
 
 describe("renderTestModule", () => {
   it("returns export {} for empty input", () => {
-    expect(renderTestModule([], "foo.md", { plugin: vitestPlugin })).toBe(
-      "export {}\n",
-    )
+    expect(renderTestModule([], "foo.md", { plugin: vitestPlugin })).toBe("export {}\n")
   })
 
   it("wraps a single block in describe + async it", () => {
@@ -33,9 +31,7 @@ describe("renderTestModule", () => {
     expect(out).toContain(`describe("foo.md", () =>`)
     expect(out).toContain(`it("Adds", async () =>`)
     expect(out).toContain("expect(1).toBe(1)")
-    expect(out).toContain(
-      `await import("vite-plus/test").catch(() => import("vitest"))`,
-    )
+    expect(out).toContain(`await import("vite-plus/test").catch(() => import("vitest"))`)
   })
 
   it("suffixes duplicate headings with #N", () => {

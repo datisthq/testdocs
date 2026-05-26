@@ -13,10 +13,7 @@ describe("testdocs jest transformer", () => {
   })
 
   it("returns export {} for md files with no marked blocks", () => {
-    const { code } = transformer.process(
-      "# H\n\n```ts\nx\n```\n",
-      "/path/empty.md",
-    )
+    const { code } = transformer.process("# H\n\n```ts\nx\n```\n", "/path/empty.md")
     expect(code).toBe("export {}\n")
   })
 

@@ -32,13 +32,9 @@ export function renderTestModule(
   const fallback = filename.replace(/\.md$/, "")
   const names = assignNames(blocks, fallback)
   const itStatements = blocks
-    .map((block, index) =>
-      renderIt(names[index] ?? fallback, block.body, kindFor(block)),
-    )
+    .map((block, index) => renderIt(names[index] ?? fallback, block.body, kindFor(block)))
     .join("\n")
-  file.addStatements(
-    `describe(${JSON.stringify(filename)}, () => {\n${itStatements}\n})`,
-  )
+  file.addStatements(`describe(${JSON.stringify(filename)}, () => {\n${itStatements}\n})`)
 
   file.formatText({ indentSize: 2, convertTabsToSpaces: true })
   return file.getFullText()
