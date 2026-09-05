@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: Testdocs
+abstract: Test runner plugin that executes TypeScript code blocks from Markdown docs as real Vitest or Jest tests.
+authors:
+  - family-names: Karev
+    given-names: Evgeny
+    email: evgeny.karev@datist.io
+url: "https://testdocs.dev"
+repository-code: "https://github.com/datisthq/testdocs"
+license: MIT
+keywords:
+  - testdocs
+  - documentation
+  - testing
+  - vitest
+  - jest
+  - markdown
