@@ -35,6 +35,7 @@
     "vers": "pnpm version --no-git-tag-version"
   },
   "dependencies": {
+    "cn": "0.2.6",
     "mdast-util-to-string": "^4.0.0",
     "remark-parse": "^11.0.0",
     "ts-morph": "^27.0.2",
