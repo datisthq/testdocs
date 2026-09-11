@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/datisthq/testdocs/compare/v0.3.0...v0.3.1) (2026-09-11)
+
+
+### Bug Fixes
+
+* **release:** keep the v-prefixed tag format ([27af573](https://github.com/datisthq/testdocs/commit/27af57301e5d6a1b6ae31888f3489f01381eb3d8))
+
 ## [0.3.0](https://github.com/datisthq/testdocs/compare/v0.2.0...v0.3.0) (2026-08-29)
 
 ### Features
